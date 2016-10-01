@@ -49,6 +49,7 @@ public class HomeScreenGUI extends JFrame {
     public static ArrayList<Rental> rentalList = new ArrayList<>();
     JTextArea area;
     
+    ///Creating the Combo Boxes 
     String[] propertyLists = {"Properties Available", "Properties Least Out"};
     JComboBox propertyLts = new JComboBox(propertyLists);
     JButton b = new JButton("Enter");
@@ -298,7 +299,7 @@ public class HomeScreenGUI extends JFrame {
             
             b.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    propertyMenu.hide();
+                    
                     String s = propertyLts.getSelectedItem().toString();
                     if(s == "Properties Available"){
                         StringBuilder builder = new StringBuilder(propertyAvailable.size());
@@ -318,9 +319,9 @@ public class HomeScreenGUI extends JFrame {
                         for (Property p : propertyAvailable) {
                             System.out.println(p.toString());
                         }
-                        propertyMenu.show();
+                        
                     }else{
-                        propertyMenu.hide();
+                        
                         StringBuilder builder = new StringBuilder(propertyLet.size());
                             for (Property prop : propertyLet) {
                                 builder.append(prop.toString() + "\n");
@@ -338,7 +339,7 @@ public class HomeScreenGUI extends JFrame {
                         for (Property p : propertyLet) {
                             System.out.println(p.toString());
                         }
-                        propertyMenu.show();
+                        
                     }
                 }
             });
@@ -441,13 +442,13 @@ public class HomeScreenGUI extends JFrame {
             
             d.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                        tenantMenu.hide();
-                        String s = tenantLts.getSelectedItem().toString();
+                        
+                    String s = tenantLts.getSelectedItem().toString();
                         if(s == "Tenants Available"){     
-                StringBuilder builder = new StringBuilder(tenantAvailable.size());
-                for (Tenant land : tenantAvailable) {
-                    builder.append(land.toString() + "\n");
-                }
+                            StringBuilder builder = new StringBuilder(tenantAvailable.size());
+                            for (Tenant land : tenantAvailable) {
+                                builder.append(land.toString() + "\n");
+                            }
             
                 //JTextArea for displaying the list (StringBuilder)
                 JTextArea textArea = new JTextArea(builder.toString());
@@ -461,15 +462,15 @@ public class HomeScreenGUI extends JFrame {
                 for (Tenant t : tenantAvailable) {
                     System.out.println(t.toString());
                 }
-                tenantMenu.show();
+                
                 }
             
             else{
-                tenantMenu.hide();
+                
                 StringBuilder builder = new StringBuilder(tenantList.size());
-                for (Tenant land : tenantList) {
-                    builder.append(land.toString() + "\n");
-                }
+                    for (Tenant land : tenantList) {
+                        builder.append(land.toString() + "\n");
+                    }
             
                 //JTextArea for displaying the list (StringBuilder)
                 JTextArea textArea = new JTextArea(builder.toString());
@@ -483,7 +484,7 @@ public class HomeScreenGUI extends JFrame {
                 for (Tenant t : tenantList) {
                     System.out.println(t.toString());
                 }
-                tenantMenu.show();
+                
                 }
             }
         });
@@ -715,13 +716,16 @@ public class HomeScreenGUI extends JFrame {
     private void loadDatabases() {
         //Load the Landlords File
         loadLandlordsFile();
+        
         //Load the Properties Files
         loadPropertiesListFile();
         loadPropertiesFile();
         loadPropertiesLetFile();
+        
         //Load the Tenants Files
         loadTenantsFile();
         loadTenantsListFile();
+        
         //Load the Rentals File
         loadRentalsFile();
     }
@@ -1081,8 +1085,7 @@ public class HomeScreenGUI extends JFrame {
             }break;
         }
       }
-                }else{
-        boolean foundMatch = false;
+            }else{boolean foundMatch = false;
         ArrayList<String> tenantIdList = new ArrayList<String>();
         String tenantIDString = "";
         String selectedTenant = "";
@@ -1129,7 +1132,6 @@ public class HomeScreenGUI extends JFrame {
         return removedTenant;
     }
 
-    
     private Tenant amendTenant(){
         boolean foundMatch = false;
         ArrayList<String> tenantIdList = new ArrayList<String>();
