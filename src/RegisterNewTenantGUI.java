@@ -66,7 +66,7 @@ public class RegisterNewTenantGUI extends JFrame{
         
         //Buttons:
         //Add Button
-        addB = new JButton("Add Landlord");
+        addB = new JButton("Add Tenant");
         addB.setFont(myFont);
         addB.setToolTipText("Click to submit details to the system.\n NOTE: Make sure details are correct with landlord");
         addB.addActionListener(ae->{
@@ -76,7 +76,7 @@ public class RegisterNewTenantGUI extends JFrame{
             t1.setPhoneNumber(tenantPhoneTF.getText());
             t1.setPpsNumber(tenantPPSTF.getText());
             t1.setTenantStatus(tenantStatusTF.getText());             
-            HomeScreenGUI.tenantAvailable.add(t1);   //Add to the landlord arrayList declared in the Home Screen
+            HomeScreenGUI.tenantsAvailable.add(t1);   //Add to the landlord arrayList declared in the Home Screen
             tenantIDTF.setText(""+t1.getTenantID());
             JOptionPane.showMessageDialog(null, "Tenant added to tenant list!");
         });

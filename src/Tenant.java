@@ -32,13 +32,13 @@ public class Tenant extends Person implements Serializable {
     }
      
     public static int getNextTenantID(){
-        if(HomeScreenGUI.tenantAvailable.isEmpty()){
+        if(HomeScreenGUI.tenantsAvailable.isEmpty()){
             int Id = nextTenantID;
             nextTenantID++;
             return Id;
         }
         else{
-            int Id = HomeScreenGUI.tenantAvailable.get(HomeScreenGUI.tenantAvailable.size() - 1).getTenantID();
+            int Id = HomeScreenGUI.tenantsAvailable.get(HomeScreenGUI.tenantsAvailable.size() - 1).getTenantID();
             return (Id +1);
         }
     }

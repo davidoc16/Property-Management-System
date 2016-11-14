@@ -38,47 +38,53 @@ import javax.swing.JPanel;
  */
 public class HomeScreenGUI extends JFrame {
     //JMenu fileMenu, landlordsMenu, propertiesMenu, tenantsMenu, rentalsMenu, helpMenu;
-    
+
     ///Creating the ArrayLists
     public static ArrayList<Landlord> landlordList = new ArrayList<>();
     public static ArrayList<Property> propertyList = new ArrayList<>();
     public static ArrayList<Property> propertyLet = new ArrayList<>();
     public static ArrayList<Property> propertyAvailable = new ArrayList<>();
-    public static ArrayList<Tenant> tenantAvailable = new ArrayList<>();
+    public static ArrayList<Tenant> tenantsAvailable = new ArrayList<>();
     public static ArrayList<Tenant> tenantList = new ArrayList<>();
     public static ArrayList<Rental> rentalList = new ArrayList<>();
     JTextArea area;
-    
+
     ///Creating the Combo Boxes 
-    String[] propertyLists = {"Properties Available", "Properties Least Out"};
-    JComboBox propertyLts = new JComboBox(propertyLists);
+    String[] delPropertyLists = {"Properties Available", "Properties Least Out"};
+    JComboBox delPropertyLts = new JComboBox(delPropertyLists);
     JButton b = new JButton("Enter");
     JButton c = new JButton("Cancel");
-    JLabel lblText = new JLabel("Select Property List");
-    
+    JLabel delProText = new JLabel("Select Property List to delete from");
+
     String[] tenantLists = {"Tenants Available", "Tenants Not Available"};
     JComboBox tenantLts = new JComboBox(tenantLists);
     JButton d = new JButton("Enter");
     JButton f = new JButton("Cancel");
     JLabel tenText = new JLabel("Select Tenant List");
-    
+
     String[] delTenantLists = {"Tenants Available", "Tenants Not Available"};
-    JComboBox delTenantLts = new JComboBox(tenantLists);
+    JComboBox delTenantLts = new JComboBox(delTenantLists);
     JButton g = new JButton("Enter");
     JButton h = new JButton("Cancel");
     JLabel delTenText = new JLabel("Select Tenant List to delete from");
-    
-    String searchName;  
+
+    String[] amdTenantLists = {"Tenants Available", "Tenants Not Available"};
+    JComboBox amdTenantLts = new JComboBox(amdTenantLists);
+    JButton i = new JButton("Enter");
+    JButton j = new JButton("Cancel");
+    JLabel amdTenText = new JLabel("Select Tenant List to delete from");
+
+    String searchName;
     boolean found = false;
-    
-     public static void main(String args[]) throws IOException{
+
+    public static void main(String args[]) throws IOException {
         //Run the Main Application GUI
         HomeScreenGUI ex = new HomeScreenGUI();
         ex.setVisible(true);
     }
-    
-     public HomeScreenGUI(){
-        
+
+    public HomeScreenGUI() {
+
         //Returns an image which gets pixel data from the specified file.
         Image storeImage = Toolkit.getDefaultToolkit().createImage("images/PropertyManagement.jpg"); //http://www.apartmentleasingtraining.org/property-management-course
 
@@ -97,16 +103,16 @@ public class HomeScreenGUI extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         area = new JTextArea();
-     }
-     
-     /**
+    }
+
+    /**
      * Creates the menu bar on the main GUI
      */
     private void createMenuBar() {
-        
+
         JMenuBar menuBar = new JMenuBar();
         JMenu listMenu;
-        
+
         //Load in the Icons
         ImageIcon exitIcon = new ImageIcon("images/exit.png");
         ImageIcon addIcon = new ImageIcon("images/add.png");
@@ -119,26 +125,26 @@ public class HomeScreenGUI extends JFrame {
         ImageIcon openIcon = new ImageIcon("images/open.png");
         ImageIcon aboutIcon = new ImageIcon("images/about.png");
         ImageIcon helpIcon = new ImageIcon("images/help.png");
-        
+
         //Set up all the JMenus and their Hot keys (Hold ALT + key)
         JMenu file = new JMenu("File");
         file.setMnemonic(KeyEvent.VK_F);
-        
+
         JMenu landlords = new JMenu("Landlords");
         landlords.setMnemonic(KeyEvent.VK_L);
-        
+
         JMenu properties = new JMenu("Properties");
         properties.setMnemonic(KeyEvent.VK_P);
-        
+
         JMenu tenants = new JMenu("Tenants");
         tenants.setMnemonic(KeyEvent.VK_T);
-        
+
         JMenu rentals = new JMenu("Rentals");
         rentals.setMnemonic(KeyEvent.VK_R);
-        
+
         JMenu help = new JMenu("Help");
         help.setMnemonic(KeyEvent.VK_H);
-        
+
         //////////File Menu Items/////////////////////////////////////////////////////////////////
         //Save data option
         JMenuItem save = new JMenuItem("  Save", saveIcon);
@@ -148,7 +154,7 @@ public class HomeScreenGUI extends JFrame {
             saveDatabases();
             System.out.println("Save clicked");
         });
-        
+
         //Load data option
         JMenuItem load = new JMenuItem("  Load", openIcon);
         load.setMnemonic(KeyEvent.VK_L);
@@ -157,31 +163,31 @@ public class HomeScreenGUI extends JFrame {
             loadDatabases();
             System.out.println("Load clicked");
         });
-        
+
         //Exit Option
         JMenuItem exit = new JMenuItem("  Exit", exitIcon);
         exit.setMnemonic(KeyEvent.VK_E);
         exit.setToolTipText("Exit application");
         exit.addActionListener(ae -> {
-                    System.out.println("Exit option clicked");
-                    String message = " Would you like to save any changes made to the database? ";
-                    String title = "Quit";
-                    int confirm = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION);
-                    if (confirm == JOptionPane.YES_OPTION) {
-                        saveDatabases();
-                        JOptionPane.showMessageDialog(null, "Database updated. Goodbye");
-                        System.exit(0);
-                    } else if (confirm == JOptionPane.NO_OPTION) {
-                        JOptionPane.showMessageDialog(null, "Database not updated. Goodbye");
-                        System.exit(0);
-                    }
-                }
+            System.out.println("Exit option clicked");
+            String message = " Would you like to save any changes made to the database? ";
+            String title = "Quit";
+            int confirm = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_CANCEL_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                saveDatabases();
+                JOptionPane.showMessageDialog(null, "Database updated. Goodbye");
+                System.exit(0);
+            } else if (confirm == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "Database not updated. Goodbye");
+                System.exit(0);
+            }
+        }
         );
         file.add(save);
         file.add(load);
         file.addSeparator();
         file.add(exit);
-        
+
 //////////Landlord Menu Items/////////////////////////////////////////////////////////////////
         //Add a Landlord
         JMenuItem registerLandlord = new JMenuItem("  Register Landlord", addIcon);
@@ -190,16 +196,16 @@ public class HomeScreenGUI extends JFrame {
         registerLandlord.addActionListener(ae -> {
             RegisterLandlordGUI addNewLandlordScreen = new RegisterLandlordGUI();
         });
-        
+
         //De-Register Landlord 
-        JMenuItem deRegisterLandlord  = new JMenuItem("  De-Register Landlord", deleteIcon);
+        JMenuItem deRegisterLandlord = new JMenuItem("  De-Register Landlord", deleteIcon);
         deRegisterLandlord.setMnemonic(KeyEvent.VK_D);
         deRegisterLandlord.setToolTipText("De-Register Landlord from the system");
         deRegisterLandlord.addActionListener(ae -> {
             System.out.println("De-Register Landlord Clicked");
             Landlord removeLandLord = removeLandlord();
         });
-        
+
         //Amend landlord's details
         JMenuItem amendDetails = new JMenuItem("  Amend Details", editIcon);
         amendDetails.setMnemonic(KeyEvent.VK_C);
@@ -209,8 +215,9 @@ public class HomeScreenGUI extends JFrame {
             Landlord searchedLandL = amendLandlord();
             if (searchedLandL != null) {
                 AmendLandlordGUI amendLandlordGUI = new AmendLandlordGUI(searchedLandL);
-        }});
-                
+            }
+        });
+
         //Search for Landlord 
         JMenuItem searchLandlord = new JMenuItem("  Search Landlord", searchIcon);
         searchLandlord.setMnemonic(KeyEvent.VK_S);
@@ -219,7 +226,7 @@ public class HomeScreenGUI extends JFrame {
             System.out.println("Search Landlord Clicked");
             Landlord seaLandlord = searchLandlord();
         });
-        
+
         //Display all Landlords
         JMenuItem displayLandlord = new JMenuItem("  Display Landlords", displayIcon);
         displayLandlord.setMnemonic(KeyEvent.VK_L);
@@ -230,8 +237,8 @@ public class HomeScreenGUI extends JFrame {
             for (Landlord land : landlordList) {
                 builder.append(land.toString() + "\n");
             }
-            
-             //JTextArea for displaying the list (StringBuilder)
+
+            //JTextArea for displaying the list (StringBuilder)
             JTextArea textArea = new JTextArea(builder.toString());
             JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                     JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -244,13 +251,13 @@ public class HomeScreenGUI extends JFrame {
                 System.out.println(c.toString());
             }
         });
-       
+
         landlords.add(registerLandlord);
         landlords.add(deRegisterLandlord);
         landlords.add(amendDetails);
         landlords.add(searchLandlord);
         landlords.add(displayLandlord);
-        
+
 //////////Properties MenuItems/////////////////////////////////////////////////////////////////
         //Record New Property
         JMenuItem recordNewProperty = new JMenuItem("  Record New Property", addIcon);
@@ -259,16 +266,16 @@ public class HomeScreenGUI extends JFrame {
         recordNewProperty.addActionListener(ae -> {
             RecordNewPropertyGUI addNewPropertyScreen = new RecordNewPropertyGUI();
         });
-        
+
         //Delete Property 
-        JMenuItem deleteProperty  = new JMenuItem("  Delete Property", deleteIcon);
+        JMenuItem deleteProperty = new JMenuItem("  Delete Property", deleteIcon);
         deleteProperty.setMnemonic(KeyEvent.VK_D);
         deleteProperty.setToolTipText("Delete Property from the system");
         deleteProperty.addActionListener(ae -> {
             System.out.println("Delete Property Clicked");
             Property removeProperty = removeProperty();
         });
-        
+
         //Search For Property 
         JMenuItem searchProperties = new JMenuItem("  Search For Property", searchIcon);
         searchProperties.setMnemonic(KeyEvent.VK_A);
@@ -276,80 +283,61 @@ public class HomeScreenGUI extends JFrame {
         searchProperties.addActionListener(ae -> {
             System.out.println("Search For Property Clicked");
         });
-        
-        //Display all Properties
+
+        //Display all Properties Available
+        JMenuItem propertiesAvailable = new JMenuItem("  Display Properties Available", displayIcon);
+        propertiesAvailable.setMnemonic(KeyEvent.VK_A);
+        propertiesAvailable.setToolTipText("Search Properties on the system");
+        propertiesAvailable.addActionListener(ae -> {
+            System.out.println("Display Properties Clicked");
+
+            StringBuilder builder = new StringBuilder(propertyAvailable.size());
+            for (Property pr : propertyAvailable) {
+                builder.append(pr.toString() + "\n");
+            }
+
+            //JTextArea for displaying the list (StringBuilder)
+            JTextArea textArea = new JTextArea(builder.toString());
+            JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+            scrollPane.setPreferredSize(new Dimension(500, 500));
+            JOptionPane.showMessageDialog(null, scrollPane, "List of Properties Available", JOptionPane.OK_OPTION);
+
+            for (Property pro : propertyAvailable) {
+                System.out.println(pro.toString());
+            }
+
+        });
+
+        //Display all Properties 
         JMenuItem displayProperties = new JMenuItem("  Display Properties", displayIcon);
         displayProperties.setMnemonic(KeyEvent.VK_A);
         displayProperties.setToolTipText("Search Properties on the system");
         displayProperties.addActionListener(ae -> {
             System.out.println("Display Properties Clicked");
-            JFrame propertyMenu = new JFrame();
-            propertyMenu.setVisible(true);
-            propertyMenu.setSize(200,200);
-            propertyMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            propertyMenu.setLocationRelativeTo(null);
-                      
-            JPanel propty = new JPanel();
-            propty.add(lblText);
-            propty.add(propertyLts); 
-            propty.add(b);
-            propty.add(c);
-            
-            propertyMenu.add(propty);         
-            
-            b.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                    
-                    String s = propertyLts.getSelectedItem().toString();
-                    if(s == "Properties Available"){
-                        StringBuilder builder = new StringBuilder(propertyAvailable.size());
-                            for (Property prop : propertyAvailable) {
-                                builder.append(prop.toString() + "\n");
-                            }
-            
-                            //JTextArea for displaying the list (StringBuilder)
-                            JTextArea textArea = new JTextArea(builder.toString());
-                            JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                            textArea.setLineWrap(true);
-                            textArea.setWrapStyleWord(true);
-                            scrollPane.setPreferredSize(new Dimension(500, 500));
-                            JOptionPane.showMessageDialog(null, scrollPane, "List of Properties", JOptionPane.OK_OPTION);
 
-                        for (Property p : propertyAvailable) {
-                            System.out.println(p.toString());
-                        }
-                        
-                    }else{
-                        
-                        StringBuilder builder = new StringBuilder(propertyLet.size());
-                            for (Property prop : propertyLet) {
-                                builder.append(prop.toString() + "\n");
-                            }
-            
-                            //JTextArea for displaying the list (StringBuilder)
-                            JTextArea textArea = new JTextArea(builder.toString());
-                            JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                            textArea.setLineWrap(true);
-                            textArea.setWrapStyleWord(true);
-                            scrollPane.setPreferredSize(new Dimension(500, 500));
-                            JOptionPane.showMessageDialog(null, scrollPane, "List of Properties", JOptionPane.OK_OPTION);
-                        
-                        for (Property p : propertyLet) {
-                            System.out.println(p.toString());
-                        }
-                        
-                    }
-                }
-            });
-            c.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                propertyMenu.dispose();
-            }});
-            
+            StringBuilder builder = new StringBuilder(propertyList.size());
+            for (Property pr : propertyList) {
+                builder.append(pr.toString() + "\n");
+            }
+
+            //JTextArea for displaying the list (StringBuilder)
+            JTextArea textArea = new JTextArea(builder.toString());
+            JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+            scrollPane.setPreferredSize(new Dimension(500, 500));
+            JOptionPane.showMessageDialog(null, scrollPane, "List of Properties", JOptionPane.OK_OPTION);
+
+            for (Property pro : propertyAvailable) {
+                System.out.println(pro.toString());
+            }
+
         });
-        
+
         //List Properties Available/Let
         JMenuItem listPropertiesAvailable = new JMenuItem("  List Properties Available/Let", listIcon);
         listPropertiesAvailable.setMnemonic(KeyEvent.VK_L);
@@ -360,8 +348,8 @@ public class HomeScreenGUI extends JFrame {
             for (Property prop : propertyList) {
                 builder.append(prop.toString() + "\n");
             }
-            
-             //JTextArea for displaying the list (StringBuilder)
+
+            //JTextArea for displaying the list (StringBuilder)
             JTextArea textArea = new JTextArea(builder.toString());
             JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                     JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -374,13 +362,14 @@ public class HomeScreenGUI extends JFrame {
                 System.out.println(p.toString());
             }
         });
-        
+
         properties.add(recordNewProperty);
         properties.add(deleteProperty);
         properties.add(searchProperties);
         properties.add(displayProperties);
+        properties.add(propertiesAvailable);
         properties.add(listPropertiesAvailable);
-        
+
 //////////Tenants Menu Items/////////////////////////////////////////////////////////////////
         //Register New Tenant
         JMenuItem registerNewTenant = new JMenuItem("  Register New Tenant", addIcon);
@@ -389,7 +378,7 @@ public class HomeScreenGUI extends JFrame {
         registerNewTenant.addActionListener(ae -> {
             RegisterNewTenantGUI addNewTenantScreen = new RegisterNewTenantGUI();
         });
-        
+
         //Delete Tenant
         JMenuItem deleteTenant = new JMenuItem("  Delete Tenant", deleteIcon);
         deleteTenant.setMnemonic(KeyEvent.VK_D);
@@ -398,7 +387,7 @@ public class HomeScreenGUI extends JFrame {
             System.out.println("Delete Tenant Clicked");
             Tenant removeTenant = removeTenant();
         });
-        
+
         //Amend tenant's details
         JMenuItem amendTenant = new JMenuItem("  Amend Tenant's Details", editIcon);
         amendTenant.setMnemonic(KeyEvent.VK_C);
@@ -408,8 +397,9 @@ public class HomeScreenGUI extends JFrame {
             Tenant amendTenantDetails = amendTenant();
             if (amendTenantDetails != null) {
                 AmendTenantGUI amendTenantGUI = new AmendTenantGUI(amendTenantDetails);
-        }});
-        
+            }
+        });
+
         //Search For Tenant
         JMenuItem searchTenant = new JMenuItem("  Search For Tenant", searchIcon);
         searchTenant.setMnemonic(KeyEvent.VK_S);
@@ -418,60 +408,54 @@ public class HomeScreenGUI extends JFrame {
             System.out.println("Search For Tenant Clicked");
             Tenant searchTen = searchTenant();
         });
-        
+
         //Display All Tenants
-        JMenuItem displayTenants = new JMenuItem("  Display Tenants", displayIcon);
+        JMenuItem tenantsAvailable = new JMenuItem("  Display Available Tenants", displayIcon);
+        tenantsAvailable.setMnemonic(KeyEvent.VK_P);
+        tenantsAvailable.setToolTipText("Display Tenants on the system");
+        tenantsAvailable.addActionListener(ae -> {
+            System.out.println("Display Tenants Clicked");
+
+            String s = tenantLts.getSelectedItem().toString();
+            if (s == "Tenants Available") {
+                StringBuilder builder = new StringBuilder(HomeScreenGUI.tenantsAvailable.size());
+                for (Tenant land : HomeScreenGUI.tenantsAvailable) {
+                    builder.append(land.toString() + "\n");
+                }
+
+                //JTextArea for displaying the list (StringBuilder)
+                JTextArea textArea = new JTextArea(builder.toString());
+                JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                textArea.setLineWrap(true);
+                textArea.setWrapStyleWord(true);
+                scrollPane.setPreferredSize(new Dimension(500, 500));
+                JOptionPane.showMessageDialog(null, scrollPane, "List of Tenants Available", JOptionPane.OK_OPTION);
+
+                System.out.println("Tenant's Available List :");
+                for (Tenant t : HomeScreenGUI.tenantsAvailable) {
+                    System.out.println("Name: " + t.getName() + "\nID number: "
+                            + t.getAddress() + "\nPhone No: " + t.getPhoneNumber() + "\nPPS Number: " + t.getPpsNumber()
+                            + "\nTenant ID: " + t.getTenantID() + "\nTenant Status: " + t.getTenantStatus());
+                }
+
+            }
+        });
+
+        //Display All Tenants
+        JMenuItem displayTenants = new JMenuItem("  Display Tenants List", displayIcon);
         displayTenants.setMnemonic(KeyEvent.VK_P);
         displayTenants.setToolTipText("Display Tenants on the system");
         displayTenants.addActionListener(ae -> {
             System.out.println("Display Tenants Clicked");
-            
-            JFrame tenantMenu = new JFrame();
-            tenantMenu.setVisible(true);
-            tenantMenu.setSize(200,200);
-            tenantMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            tenantMenu.setLocationRelativeTo(null);
-                      
-            JPanel tent = new JPanel();
-            tent.add(tenText);
-            tent.add(tenantLts); 
-            tent.add(d);
-            tent.add(f);
-            
-            tenantMenu.add(tent);         
-            
-            d.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                        
-                    String s = tenantLts.getSelectedItem().toString();
-                        if(s == "Tenants Available"){     
-                            StringBuilder builder = new StringBuilder(tenantAvailable.size());
-                            for (Tenant land : tenantAvailable) {
-                                builder.append(land.toString() + "\n");
-                            }
-            
-                //JTextArea for displaying the list (StringBuilder)
-                JTextArea textArea = new JTextArea(builder.toString());
-                JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                textArea.setLineWrap(true);
-                textArea.setWrapStyleWord(true);
-                scrollPane.setPreferredSize(new Dimension(500, 500));
-                JOptionPane.showMessageDialog(null, scrollPane, "List of Tenants", JOptionPane.OK_OPTION);
 
-                for (Tenant t : tenantAvailable) {
-                    System.out.println(t.toString());
-                }
-                
-                }
-            
-            else{
-                
+            String s = tenantLts.getSelectedItem().toString();
+            if (s == "Tenants Available") {
                 StringBuilder builder = new StringBuilder(tenantList.size());
-                    for (Tenant land : tenantList) {
-                        builder.append(land.toString() + "\n");
-                    }
-            
+                for (Tenant ten : tenantList) {
+                    builder.append(ten.toString() + "\n");
+                }
+
                 //JTextArea for displaying the list (StringBuilder)
                 JTextArea textArea = new JTextArea(builder.toString());
                 JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -479,28 +463,24 @@ public class HomeScreenGUI extends JFrame {
                 textArea.setLineWrap(true);
                 textArea.setWrapStyleWord(true);
                 scrollPane.setPreferredSize(new Dimension(500, 500));
-                JOptionPane.showMessageDialog(null, scrollPane, "List of Tenants", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(null, scrollPane, "List of Tenants Available", JOptionPane.OK_OPTION);
 
-                for (Tenant t : tenantList) {
-                    System.out.println(t.toString());
+                System.out.println("Tenant's Available List :");
+                for (Tenant t : HomeScreenGUI.tenantsAvailable) {
+                    System.out.println("Name: " + t.getName() + "\nID number: "
+                            + t.getAddress() + "\nPhone No: " + t.getPhoneNumber() + "\nPPS Number: " + t.getPpsNumber()
+                            + "\nTenant ID: " + t.getTenantID() + "\nTenant Status: " + t.getTenantStatus());
                 }
-                
-                }
+
             }
         });
-            f.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                tenantMenu.dispose();
-            }});
-            
-        });
-        
+
         tenants.add(registerNewTenant);
         tenants.add(deleteTenant);
         tenants.add(amendTenant);
         tenants.add(searchTenant);
         tenants.add(displayTenants);
-        
+        tenants.add(tenantsAvailable);
 
 //////////Rentals Menu Items/////////////////////////////////////////////////////////////////
         //Process New Rental
@@ -513,32 +493,32 @@ public class HomeScreenGUI extends JFrame {
             for (Rental land : rentalList) {
                 builder.append(land.toString() + "\n");
             }
-            
-        // pick a tenant
-        int tenIdx = Integer.parseInt(JOptionPane.showInputDialog("Enter a tenant ID number "
-                + " between 1 and " + tenantAvailable.size()));
-        // pick a property
-        int propIdx = Integer.parseInt(JOptionPane.showInputDialog("Enter a property ID number "
-                + " between 1 and " + propertyAvailable.size()));
 
-        // create a new rental object
-        Rental propertyRental = new Rental(propertyAvailable.get(tenIdx - 1),
-                tenantAvailable.get(propIdx - 1));
-        propertyAvailable.get(propIdx - 1).takeProperty();
-        propertyRental.setTerm("1 year");
-        propertyRental.setRate(750.00);
-        // add the tenant to the property list
-        rentalList.add(propertyRental); 
-        // add taken tenant to tenantList
-        tenantList.add(tenantAvailable.get(propIdx - 1));
-        // remove taken tenant from tenantAvailable list
-        tenantAvailable.remove(tenantAvailable.get(propIdx - 1));
-        // add taken property to propertyLet list
-        propertyLet.add(propertyAvailable.get(tenIdx - 1));
-        // remove taken property from propertyAvailable list
-        propertyAvailable.remove(propertyAvailable.get(tenIdx - 1));
+            // pick a tenant
+            int tenIdx = Integer.parseInt(JOptionPane.showInputDialog("Enter a tenant ID number "
+                    + " between 1 and " + HomeScreenGUI.tenantsAvailable.size()));
+            // pick a property
+            int propIdx = Integer.parseInt(JOptionPane.showInputDialog("Enter a property ID number "
+                    + " between 1 and " + propertyAvailable.size()));
+
+            // create a new rental object
+            Rental propertyRental = new Rental(propertyAvailable.get(tenIdx - 1),
+                    HomeScreenGUI.tenantsAvailable.get(propIdx - 1));
+            propertyAvailable.get(propIdx - 1).takeProperty();
+            propertyRental.setTerm("1 year");
+            propertyRental.setRate(750.00);
+            // add the tenant to the property list
+            rentalList.add(propertyRental);
+            // add taken tenant to tenantList
+            tenantList.add(HomeScreenGUI.tenantsAvailable.get(propIdx - 1));
+            // remove taken tenant from tenantAvailable list
+            HomeScreenGUI.tenantsAvailable.remove(HomeScreenGUI.tenantsAvailable.get(propIdx - 1));
+            // add taken property to propertyLet list
+            propertyLet.add(propertyAvailable.get(tenIdx - 1));
+            // remove taken property from propertyAvailable list
+            propertyAvailable.remove(propertyAvailable.get(tenIdx - 1));
         });
-        
+
         //Search For Rental
         JMenuItem searchRental = new JMenuItem("  Search For Rental", searchIcon);
         searchRental.setMnemonic(KeyEvent.VK_S);
@@ -546,36 +526,35 @@ public class HomeScreenGUI extends JFrame {
         searchRental.addActionListener(ae -> {
             System.out.println("Search For Rental Clicked");
         });
-        
+
         //Display All Rentals
         JMenuItem displayRentals = new JMenuItem("  Display Rentals", displayIcon);
         displayRentals.setMnemonic(KeyEvent.VK_D);
         displayRentals.setToolTipText("Display Rentals on the system");
         displayRentals.addActionListener(ae -> {
             System.out.println("Display Rentals Clicked");
-            
+
             // note that this gives a very poor display layout
-        // instead of using r.toString(), a better-organised display would be needed  
-        area.setText("Class List\n");
-        // adding scrollbar
-        JScrollPane scroll = new JScrollPane(area, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
-        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        for (Rental r : rentalList) {
-            area.append(r.toString());
-            if (r.getProperty() instanceof Property) {
-                area.append(" for Class Name: " + ((Property) (r.getProperty())).getAddress_() + "\n\n");
+            // instead of using r.toString(), a better-organised display would be needed  
+            area.setText("Class List\n");
+            // adding scrollbar
+            JScrollPane scroll = new JScrollPane(area, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            for (Rental r : rentalList) {
+                area.append(r.toString());
+                if (r.getProperty() instanceof Property) {
+                    area.append(" for Class Name: " + ((Property) (r.getProperty())).getAddress_() + "\n\n");
+                }
             }
-        }
-        // setting scrollbar dimension
-        scroll.setPreferredSize(new Dimension(500, 500));
-        JOptionPane.showMessageDialog(null, scroll);
+            // setting scrollbar dimension
+            scroll.setPreferredSize(new Dimension(500, 500));
+            JOptionPane.showMessageDialog(null, scroll);
         });
-        
+
         rentals.add(processNewRental);
         rentals.add(searchRental);
         rentals.add(displayRentals);
-        
-        
+
 //////////Help Menu Items/////////////////////////////////////////////////////////////////
         //The about page
         JMenuItem about = new JMenuItem("  About", aboutIcon);
@@ -583,8 +562,8 @@ public class HomeScreenGUI extends JFrame {
         about.setToolTipText("Information about this system");
         about.addActionListener(ae -> {
             System.out.println("Information about this system Clicked");
-            JOptionPane.showMessageDialog(null, "This application was developed by David O' Connor \n" +
-                    "as an exercise to further his Java Programming skills");
+            JOptionPane.showMessageDialog(null, "This application was developed by David O' Connor \n"
+                    + "as an exercise to further his Java Programming skills");
         });
 
         //Help/documentation Page
@@ -593,14 +572,14 @@ public class HomeScreenGUI extends JFrame {
         documentation.setToolTipText("Opens the help page. This shows information with regard to the operation of this system");
         documentation.addActionListener(ae -> {
             System.out.println("Display help page clicked");
-            JOptionPane.showMessageDialog(null, "Use the menu bar on the home Property Management page \n" +
-                    "for carrying out tasks. To use the hotkeys, hold: \nalt + press the underlined letter of the option you would like.\n" +
-                    "Eg: ALT + C opens the customer menu. Now you can use the arrows to navigate");
+            JOptionPane.showMessageDialog(null, "Use the menu bar on the home Property Management page \n"
+                    + "for carrying out tasks. To use the hotkeys, hold: \nalt + press the underlined letter of the option you would like.\n"
+                    + "Eg: ALT + T opens the Tenant menu. Now you can use the arrows to navigate");
         });
 
         help.add(about);
         help.add(documentation);
-        
+
         //Add top menu bar items
         menuBar.add(file);
         menuBar.add(landlords);
@@ -608,11 +587,11 @@ public class HomeScreenGUI extends JFrame {
         menuBar.add(tenants);
         menuBar.add(rentals);
         menuBar.add(help);
-        
+
         //Set the Menu bar
         setJMenuBar(menuBar);
     }//End of createMenuBar Method
-    
+
     //Saving databases/ArrayLists methods
     private void saveDatabases() {
         //Save the Landlord's File
@@ -623,11 +602,11 @@ public class HomeScreenGUI extends JFrame {
         savePropertiesLetFile();
         //Save the Tenants Files
         saveTenantsFile();
-        saveTenantsListFile();   
+        saveTenantsListFile();
         //Save the Rentals File
         saveRentalsFile();
     }
-    
+
     private void saveLandlordsFile() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("files/landlords.data"));
@@ -639,7 +618,7 @@ public class HomeScreenGUI extends JFrame {
         }
         JOptionPane.showMessageDialog(null, "landlord(s) successfully written to file\n");
     }
-    
+
     private void savePropertiesFile() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("files/property.data"));
@@ -651,7 +630,7 @@ public class HomeScreenGUI extends JFrame {
         }
         JOptionPane.showMessageDialog(null, "Property/Properties successfully written to file\n");
     }
-    
+
     private void savePropertiesListFile() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("files/propertyList.data"));
@@ -663,7 +642,7 @@ public class HomeScreenGUI extends JFrame {
         }
         JOptionPane.showMessageDialog(null, "Property/Properties successfully written to file\n");
     }
-    
+
     private void savePropertiesLetFile() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("files/propertyLet.data"));
@@ -675,11 +654,11 @@ public class HomeScreenGUI extends JFrame {
         }
         JOptionPane.showMessageDialog(null, "Property/Properties successfully written to file\n");
     }
-    
+
     private void saveTenantsFile() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("files/tenants.data"));
-            os.writeObject(HomeScreenGUI.tenantAvailable);
+            os.writeObject(HomeScreenGUI.tenantsAvailable);
             os.close();
         } catch (Exception e) {
             System.out.println("Error occurred when trying to save tenants.dat file");
@@ -687,8 +666,8 @@ public class HomeScreenGUI extends JFrame {
         }
         JOptionPane.showMessageDialog(null, "Tenant(s) successfully written to file\n");
     }
-    
-     private void saveTenantsListFile() {
+
+    private void saveTenantsListFile() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("files/tenantsList.data"));
             os.writeObject(HomeScreenGUI.tenantList);
@@ -699,8 +678,8 @@ public class HomeScreenGUI extends JFrame {
         }
         JOptionPane.showMessageDialog(null, "Tenant(s) successfully written to file\n");
     }
-     
-     private void saveRentalsFile() {
+
+    private void saveRentalsFile() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("files/rentals.data"));
             os.writeObject(HomeScreenGUI.rentalList);
@@ -711,25 +690,25 @@ public class HomeScreenGUI extends JFrame {
         }
         JOptionPane.showMessageDialog(null, "Rental(s) successfully written to file\n");
     }
-    
+
     //Loading databases/ArrayLists methods
     private void loadDatabases() {
         //Load the Landlords File
         loadLandlordsFile();
-        
+
         //Load the Properties Files
         loadPropertiesListFile();
         loadPropertiesFile();
         loadPropertiesLetFile();
-        
+
         //Load the Tenants Files
         loadTenantsFile();
         loadTenantsListFile();
-        
+
         //Load the Rentals File
         loadRentalsFile();
     }
-        
+
     private void loadLandlordsFile() {
         ObjectInputStream is;
         try {
@@ -743,7 +722,7 @@ public class HomeScreenGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Error loading the Landlords file. System closing\n");
         }
     }
-    
+
     private void loadPropertiesListFile() {
         ObjectInputStream is;
         try {
@@ -757,7 +736,7 @@ public class HomeScreenGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Error loading the Properties file. System closing\n");
         }
     }
-    
+
     private void loadPropertiesFile() {
         ObjectInputStream is;
         try {
@@ -771,7 +750,7 @@ public class HomeScreenGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Error loading the Properties file. System closing\n");
         }
     }
-    
+
     private void loadPropertiesLetFile() {
         ObjectInputStream is;
         try {
@@ -785,12 +764,12 @@ public class HomeScreenGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Error loading the Properties file. System closing\n");
         }
     }
-    
+
     private void loadTenantsFile() {
         ObjectInputStream is;
         try {
             is = new ObjectInputStream(new FileInputStream("files/tenants.data"));
-            HomeScreenGUI.tenantAvailable = (ArrayList<Tenant>) is.readObject();// note the typecast
+            HomeScreenGUI.tenantsAvailable = (ArrayList<Tenant>) is.readObject();// note the typecast
             is.close(); //Close the Input Stream
             //JOptionPane.showMessageDialog(null, "Tenants successfully loaded from file\n");
         } catch (Exception e) {
@@ -799,7 +778,7 @@ public class HomeScreenGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Error loading the Tenants file. System closing\n");
         }
     }
-    
+
     private void loadTenantsListFile() {
         ObjectInputStream is;
         try {
@@ -813,7 +792,7 @@ public class HomeScreenGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Error loading the Tenants file. System closing\n");
         }
     }
-    
+
     private void loadRentalsFile() {
         ObjectInputStream is;
         try {
@@ -827,8 +806,8 @@ public class HomeScreenGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Error loading the Rentals file. System closing\n");
         }
     }
-    
-    private Landlord amendLandlord(){
+
+    private Landlord amendLandlord() {
         boolean foundMatch = false;
         ArrayList<String> landlordIdList = new ArrayList<String>();
         String landlIDString = "";
@@ -836,7 +815,7 @@ public class HomeScreenGUI extends JFrame {
         Object[] landlordIds = {};
         String searchName = JOptionPane.showInputDialog("Enter name of landlord: ");
         Landlord searchedLandlord = new Landlord();
-        
+
         if (searchName.equals("")) {
             JOptionPane.showMessageDialog(null, "No name entered!");
         } else {
@@ -850,14 +829,14 @@ public class HomeScreenGUI extends JFrame {
                         landlordIds = landlordIdList.toArray();
                         foundMatch = true;
                     }
-        }
+                }
                 //JTextArea for displaying the list (StringBuilder)
                 JTextArea textArea = new JTextArea(builder.toString());
                 JScrollPane scrollPane = new JScrollPane(textArea);
                 textArea.setLineWrap(true);
                 textArea.setWrapStyleWord(true);
                 scrollPane.setPreferredSize(new Dimension(500, 500));
-                
+
                 //Display list if not empty
                 if (!(textArea.getText().trim().length() == 0)) {
                     JOptionPane.showMessageDialog(null, scrollPane, "List of Landlords", JOptionPane.OK_OPTION);
@@ -885,8 +864,8 @@ public class HomeScreenGUI extends JFrame {
         }
         return searchedLandlord;
     }
-    
-    private Landlord searchLandlord(){
+
+    private Landlord searchLandlord() {
         boolean foundMatch = false;
         ArrayList<String> landlordIdList = new ArrayList<String>();
         String landlIDString = "";
@@ -894,7 +873,7 @@ public class HomeScreenGUI extends JFrame {
         Object[] landlordIds = {};
         String searchName = JOptionPane.showInputDialog("Enter name of Landlord: ");
         Landlord searchedLandlord = new Landlord();
-        
+
         if (searchName.equals("")) {
             JOptionPane.showMessageDialog(null, "No name entered!");
         } else {
@@ -908,14 +887,14 @@ public class HomeScreenGUI extends JFrame {
                         landlordIds = landlordIdList.toArray();
                         foundMatch = true;
                     }
-        }
+                }
                 //JTextArea for displaying the list (StringBuilder)
                 JTextArea textArea = new JTextArea(builder.toString());
                 JScrollPane scrollPane = new JScrollPane(textArea);
                 textArea.setLineWrap(true);
                 textArea.setWrapStyleWord(true);
                 scrollPane.setPreferredSize(new Dimension(500, 500));
-                
+
                 //Display list if not empty
                 if (!(textArea.getText().trim().length() == 0)) {
                     JOptionPane.showMessageDialog(null, scrollPane, "List of Landlords", JOptionPane.OK_OPTION);
@@ -934,8 +913,8 @@ public class HomeScreenGUI extends JFrame {
         }
         return searchedLandlord;
     }
-    
-    private Landlord removeLandlord(){
+
+    private Landlord removeLandlord() {
         boolean foundMatch = false;
         ArrayList<String> landlordIdList = new ArrayList<String>();
         String landlIDString = "";
@@ -943,7 +922,7 @@ public class HomeScreenGUI extends JFrame {
         Object[] landlordIds = {};
         String removeName = JOptionPane.showInputDialog("Please enter the name of the landlord you wish to remove: ");
         Landlord removedLandlord = new Landlord();
-        
+
         if (removeName.equals("")) {
             JOptionPane.showMessageDialog(null, "No name entered!");
         } else {
@@ -957,183 +936,289 @@ public class HomeScreenGUI extends JFrame {
                         landlordIds = landlordIdList.toArray();
                         foundMatch = true;
                     }
-        }
+                }
                 //JTextArea for displaying the list (StringBuilder)
                 JTextArea textArea = new JTextArea(builder.toString());
                 JScrollPane scrollPane = new JScrollPane(textArea);
                 textArea.setLineWrap(true);
                 textArea.setWrapStyleWord(true);
                 scrollPane.setPreferredSize(new Dimension(500, 500));
-                
-        for (int i = 0; i < landlordList.size(); i++) {
-            if (removeName.equals(landlordList.get(i).getName())) {
-                landlordList.remove(i);
-                JOptionPane.showMessageDialog(null, removeName + " has been removed from the Landlord's List"); 
-            }else if(!removeName.equals(landlordList.get(i).getName()))
-            {
-                JOptionPane.showMessageDialog(null, removeName + " is not on the Landlord's List" );
-            }
-            }break;        
-        }
-      }return removedLandlord;
-    }    
-    
-    private Property removeProperty(){
-        boolean foundMatch = false;
-        ArrayList<String> propertyIdList = new ArrayList<String>();
-        String propertyIDString = "";
-        String selectedProperty = "";
-        Object[] propertyIds = {};
-        String removeProp = JOptionPane.showInputDialog("Please enter the address of the property you wish to remove: ");
-        Property removedProperty = new Property();
-        
-        if (removeProp.equals("")) {
-            JOptionPane.showMessageDialog(null, "No address entered!");
-        } else {                    
-                        
-            StringBuilder builder = new StringBuilder(propertyAvailable.size());
-            while (!foundMatch) {
-                for (Property prop : propertyAvailable) {
-                    if (prop.getAddress_().equalsIgnoreCase(removeProp)) {
-                        builder.append(prop.toString() + "\n");
-                        propertyIDString = Integer.toString(prop.getPropertyID_());
-                        propertyIdList.add(propertyIDString);
-                        propertyIds = propertyIdList.toArray();
-                        foundMatch = true;
+
+                for (int i = 0; i < landlordList.size(); i++) {
+                    if (removeName.equals(landlordList.get(i).getName())) {
+                        landlordList.remove(i);
+                        JOptionPane.showMessageDialog(null, removeName + " has been removed from the Landlord's List");
+                    } else if (!removeName.equals(landlordList.get(i).getName())) {
+                        JOptionPane.showMessageDialog(null, removeName + " is not on the Landlord's List");
                     }
-        }
-                //JTextArea for displaying the list (StringBuilder)
-                JTextArea textArea = new JTextArea(builder.toString());
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                textArea.setLineWrap(true);
-                textArea.setWrapStyleWord(true);
-                scrollPane.setPreferredSize(new Dimension(500, 500));
-                
-        for (int i = 0; i < propertyAvailable.size(); i++) {
-            if (removeProp.equals(propertyAvailable.get(i).getAddress_())) {
-                propertyAvailable.remove(i);
-                JOptionPane.showMessageDialog(null, removeProp + " has been removed from the Properties List"); 
-            }else if(!removeProp.equals(propertyAvailable.get(i).getAddress_()))
-            {
-                JOptionPane.showMessageDialog(null, removeProp + " is not on the Properties List" );
+                }
+                break;
             }
-            }break;
         }
-      }return removedProperty;  
-    }
-    
-    private Tenant removeTenant(){
-        
-        JFrame removeTenMenu = new JFrame();
-            removeTenMenu.setVisible(true);
-            removeTenMenu.setSize(200,200);
-            removeTenMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            removeTenMenu.setLocationRelativeTo(null);
-                      
-            JPanel removeTenant = new JPanel();
-            removeTenant.add(delTenText);
-            removeTenant.add(delTenantLts); 
-            removeTenant.add(g);
-            removeTenant.add(h);
-            
-            removeTenMenu.add(removeTenant);         
-            
-            Tenant removedTenant = new Tenant();
-            
-            g.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                    removeTenMenu.hide();
-                    String s = tenantLts.getSelectedItem().toString();
-        if(s == "Tenants Available"){
-        boolean foundMatch = false;
-        ArrayList<String> tenantIdList = new ArrayList<String>();
-        String tenantIDString = "";
-        String selectedTenant = "";
-        Object[] tenantIds = {};
-        String removeName = JOptionPane.showInputDialog("Please enter the name of the tenant you wish to remove: ");
-        
-        
-        if (removeName.equals("")) {
-            JOptionPane.showMessageDialog(null, "No name entered!");
-        } else {
-            StringBuilder builder = new StringBuilder(tenantAvailable.size());
-            while (!foundMatch) {
-                for (Tenant ten : tenantAvailable) {
-                    if (ten.getName().equalsIgnoreCase(removeName)) {
-                        builder.append(ten.toString() + "\n");
-                        tenantIDString = Integer.toString(ten.getTenantID());
-                        tenantIdList.add(tenantIDString);
-                        tenantIds = tenantIdList.toArray();
-                        foundMatch = true;
-                    }
-        }
-                //JTextArea for displaying the list (StringBuilder)
-                JTextArea textArea = new JTextArea(builder.toString());
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                textArea.setLineWrap(true);
-                textArea.setWrapStyleWord(true);
-                scrollPane.setPreferredSize(new Dimension(500, 500));
-                
-        for (int i = 0; i < tenantAvailable.size(); i++) {
-            if (removeName.equals(tenantAvailable.get(i).getName())) {
-                tenantAvailable.remove(i);
-                JOptionPane.showMessageDialog(null, removeName + " has been removed from the Tenant's List"); 
-            }else if(!removeName.equals(tenantAvailable.get(i).getName()))
-            {
-                JOptionPane.showMessageDialog(null, removeName + " is not on the Tenant's List" );
-            }
-            }break;
-        }
-      }
-            }else{boolean foundMatch = false;
-        ArrayList<String> tenantIdList = new ArrayList<String>();
-        String tenantIDString = "";
-        String selectedTenant = "";
-        Object[] tenantIds = {};
-        String removeName = JOptionPane.showInputDialog("Please enter the name of the tenant you wish to remove: ");
-        
-        
-        if (removeName.equals("")) {
-            JOptionPane.showMessageDialog(null, "No name entered!");
-        } else {
-            StringBuilder builder = new StringBuilder(tenantList.size());
-            while (!foundMatch) {
-                for (Tenant ten : tenantList) {
-                    if (ten.getName().equalsIgnoreCase(removeName)) {
-                        builder.append(ten.toString() + "\n");
-                        tenantIDString = Integer.toString(ten.getTenantID());
-                        tenantIdList.add(tenantIDString);
-                        tenantIds = tenantIdList.toArray();
-                        foundMatch = true;
-                    }
-        }
-                //JTextArea for displaying the list (StringBuilder)
-                JTextArea textArea = new JTextArea(builder.toString());
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                textArea.setLineWrap(true);
-                textArea.setWrapStyleWord(true);
-                scrollPane.setPreferredSize(new Dimension(500, 500));
-                
-        for (int i = 0; i < tenantList.size(); i++) {
-            if (removeName.equals(tenantList.get(i).getName())) {
-                tenantList.remove(i);
-                JOptionPane.showMessageDialog(null, removeName + " has been removed from the Tenant's List"); 
-            }else if(!removeName.equals(tenantList.get(i).getName()))
-            {
-                JOptionPane.showMessageDialog(null, removeName + " is not on the Tenant's List" );
-            }
-            }break;
-        }
-      }
-        }}             
-            
-                
-            });
-        return removedTenant;
+        return removedLandlord;
     }
 
-    private Tenant amendTenant(){
-        boolean foundMatch = false;
+    private Property removeProperty() {
+
+        JFrame removePropertyMenu = new JFrame();
+        removePropertyMenu.setVisible(true);
+        removePropertyMenu.setSize(200, 200);
+        removePropertyMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        removePropertyMenu.setLocationRelativeTo(null);
+
+        JPanel removeProperty = new JPanel();
+        removeProperty.add(delProText);
+        removeProperty.add(delPropertyLts);
+        removeProperty.add(b);
+        removeProperty.add(c);
+
+        removePropertyMenu.add(removeProperty);
+
+        Property removedProperty = new Property();
+
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String s = delPropertyLts.getSelectedItem().toString();
+                if (s == "Property Available") {
+                    boolean foundMatch = false;
+                    ArrayList<String> propertyIdList = new ArrayList<String>();
+                    String propertyIDString = "";
+                    String selectedProperty = "";
+                    Object[] propertyIds = {};
+                    String removeProperty = JOptionPane.showInputDialog("Please enter the address of the property you wish to remove: ");
+
+                    if (removeProperty.equals("")) {
+                        JOptionPane.showMessageDialog(null, "No address entered!");
+                    } else {
+                        StringBuilder builder = new StringBuilder(propertyAvailable.size());
+                        while (!foundMatch) {
+                            for (Property prop : propertyAvailable) {
+                                if (prop.getAddress_().equalsIgnoreCase(removeProperty)) {
+                                    builder.append(prop.toString() + "\n");
+                                    propertyIDString = Integer.toString(prop.getPropertyID_());
+                                    propertyIdList.add(propertyIDString);
+                                    propertyIds = propertyIdList.toArray();
+                                    foundMatch = true;
+                                }
+                            }
+                            //JTextArea for displaying the list (StringBuilder)
+                            JTextArea textArea = new JTextArea(builder.toString());
+                            JScrollPane scrollPane = new JScrollPane(textArea);
+                            textArea.setLineWrap(true);
+                            textArea.setWrapStyleWord(true);
+                            scrollPane.setPreferredSize(new Dimension(500, 500));
+
+                            for (int i = 0; i < propertyAvailable.size(); i++) {
+                                if (removeProperty.equals(propertyAvailable.get(i).getAddress_())) {
+                                    propertyAvailable.remove(i);
+                                    JOptionPane.showMessageDialog(null, removeProperty + " has been removed from the Properties List");
+                                } else if (!removeProperty.equals(propertyAvailable.get(i).getAddress_())) {
+                                    JOptionPane.showMessageDialog(null, removeProperty + " is not on the Properties List");
+                                }
+                            }
+                            break;
+                        }
+                    }
+                } else {
+                    boolean foundMatch = false;
+                    ArrayList<String> tenantIdList = new ArrayList<String>();
+                    String tenantIDString = "";
+                    String selectedTenant = "";
+                    Object[] tenantIds = {};
+                    String removeProperty = JOptionPane.showInputDialog("Please enter the address of the property you wish to remove: ");
+
+                    if (removeProperty.equals("")) {
+                        JOptionPane.showMessageDialog(null, "No address entered!");
+                    } else {
+                        StringBuilder builder = new StringBuilder(propertyList.size());
+                        while (!foundMatch) {
+                            for (Property prop : propertyList) {
+                                if (prop.getAddress_().equalsIgnoreCase(removeProperty)) {
+                                    builder.append(prop.toString() + "\n");
+                                    tenantIDString = Integer.toString(prop.getPropertyID_());
+                                    tenantIdList.add(tenantIDString);
+                                    tenantIds = tenantIdList.toArray();
+                                    foundMatch = true;
+                                }
+                            }
+                            //JTextArea for displaying the list (StringBuilder)
+                            JTextArea textArea = new JTextArea(builder.toString());
+                            JScrollPane scrollPane = new JScrollPane(textArea);
+                            textArea.setLineWrap(true);
+                            textArea.setWrapStyleWord(true);
+                            scrollPane.setPreferredSize(new Dimension(500, 500));
+
+                            for (int i = 0; i < propertyList.size(); i++) {
+                                if (removeProperty.equals(propertyList.get(i).getAddress_())) {
+                                    propertyList.remove(i);
+                                    JOptionPane.showMessageDialog(null, removeProperty + " has been removed from the Properties List");
+                                } else if (!removeProperty.equals(propertyList.get(i).getAddress_())) {
+                                    JOptionPane.showMessageDialog(null, removeProperty + " is not on the Properties List");
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+        });
+
+        c.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removePropertyMenu.dispose();
+            }
+        });
+
+        return removedProperty;
+
+    }
+
+    private Tenant removeTenant() {
+
+        JFrame removeTenMenu = new JFrame();
+        removeTenMenu.setVisible(true);
+        removeTenMenu.setSize(200, 200);
+        removeTenMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        removeTenMenu.setLocationRelativeTo(null);
+
+        JPanel removeTenant = new JPanel();
+        removeTenant.add(delTenText);
+        removeTenant.add(delTenantLts);
+        removeTenant.add(g);
+        removeTenant.add(h);
+
+        removeTenMenu.add(removeTenant);
+
+        Tenant removedTenant = new Tenant();
+
+        g.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String s = delTenantLts.getSelectedItem().toString();
+                if (s == "Tenants Available") {
+                    boolean foundMatch = false;
+                    ArrayList<String> tenantIdList = new ArrayList<String>();
+                    String tenantIDString = "";
+                    String selectedTenant = "";
+                    Object[] tenantIds = {};
+                    String removeName = JOptionPane.showInputDialog("Please enter the name of the tenant you wish to remove: ");
+
+                    if (removeName.equals("")) {
+                        JOptionPane.showMessageDialog(null, "No name entered!");
+                    } else {
+                        StringBuilder builder = new StringBuilder(tenantsAvailable.size());
+                        while (!foundMatch) {
+                            for (Tenant ten : tenantsAvailable) {
+                                if (ten.getName().equalsIgnoreCase(removeName)) {
+                                    builder.append(ten.toString() + "\n");
+                                    tenantIDString = Integer.toString(ten.getTenantID());
+                                    tenantIdList.add(tenantIDString);
+                                    tenantIds = tenantIdList.toArray();
+                                    foundMatch = true;
+                                }
+                            }
+                            //JTextArea for displaying the list (StringBuilder)
+                            JTextArea textArea = new JTextArea(builder.toString());
+                            JScrollPane scrollPane = new JScrollPane(textArea);
+                            textArea.setLineWrap(true);
+                            textArea.setWrapStyleWord(true);
+                            scrollPane.setPreferredSize(new Dimension(500, 500));
+
+                            for (int i = 0; i < tenantsAvailable.size(); i++) {
+                                if (removeName.equals(tenantsAvailable.get(i).getName())) {
+                                    tenantsAvailable.remove(i);
+                                    JOptionPane.showMessageDialog(null, removeName + " has been removed from the Tenant's List");
+                                } else if (!removeName.equals(tenantsAvailable.get(i).getName())) {
+                                    JOptionPane.showMessageDialog(null, removeName + " is not on the Tenant's List");
+                                }
+                            }
+                            break;
+                        }
+                    }
+                } else {
+                    boolean foundMatch = false;
+                    ArrayList<String> tenantIdList = new ArrayList<String>();
+                    String tenantIDString = "";
+                    String selectedTenant = "";
+                    Object[] tenantIds = {};
+                    String removeName = JOptionPane.showInputDialog("Please enter the name of the tenant you wish to remove: ");
+
+                    if (removeName.equals("")) {
+                        JOptionPane.showMessageDialog(null, "No name entered!");
+                    } else {
+                        StringBuilder builder = new StringBuilder(tenantList.size());
+                        while (!foundMatch) {
+                            for (Tenant ten : tenantList) {
+                                if (ten.getName().equalsIgnoreCase(removeName)) {
+                                    builder.append(ten.toString() + "\n");
+                                    tenantIDString = Integer.toString(ten.getTenantID());
+                                    tenantIdList.add(tenantIDString);
+                                    tenantIds = tenantIdList.toArray();
+                                    foundMatch = true;
+                                }
+                            }
+                            //JTextArea for displaying the list (StringBuilder)
+                            JTextArea textArea = new JTextArea(builder.toString());
+                            JScrollPane scrollPane = new JScrollPane(textArea);
+                            textArea.setLineWrap(true);
+                            textArea.setWrapStyleWord(true);
+                            scrollPane.setPreferredSize(new Dimension(500, 500));
+
+                            for (int i = 0; i < tenantList.size(); i++) {
+                                if (removeName.equals(tenantList.get(i).getName())) {
+                                    tenantList.remove(i);
+                                    JOptionPane.showMessageDialog(null, removeName + " has been removed from the Tenant's List");
+                                } else if (!removeName.equals(tenantList.get(i).getName())) {
+                                    JOptionPane.showMessageDialog(null, removeName + " is not on the Tenant's List");
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+        });
+
+        h.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeTenMenu.dispose();
+            }
+        });
+
+        return removedTenant;
+
+    }
+
+    private Tenant amendTenant() {
+
+        JFrame amendTenMenu = new JFrame();
+        amendTenMenu.setVisible(true);
+        amendTenMenu.setSize(200, 200);
+        amendTenMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        amendTenMenu.setLocationRelativeTo(null);
+
+        JPanel amendTenant = new JPanel();
+        amendTenant.add(amdTenText);
+        amendTenant.add(amdTenantLts);
+        amendTenant.add(i);
+        amendTenant.add(j);
+
+        amendTenMenu.add(amendTenant);
+
+        Tenant amdTenant = new Tenant();         
+        
+        
+        
+        i.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String s = delTenantLts.getSelectedItem().toString();
+                if (s == "Tenants Available") {
+                    
+                    boolean foundMatch = false;
         ArrayList<String> tenantIdList = new ArrayList<String>();
         String tenIDString = "";
         String selectedTenant = "";
@@ -1144,9 +1229,9 @@ public class HomeScreenGUI extends JFrame {
         if (searchTenant.equals("")) {
             JOptionPane.showMessageDialog(null, "No name entered!");
         } else {
-            StringBuilder builder = new StringBuilder(tenantAvailable.size());
+            StringBuilder builder = new StringBuilder(tenantsAvailable.size());
             while (!foundMatch) {
-                for (Tenant ten : tenantAvailable) {
+                for (Tenant ten : tenantsAvailable) {
                     if (ten.getName().equalsIgnoreCase(searchTenant)) {
                         builder.append(ten.toString() + "\n");
                         tenIDString = Integer.toString(ten.getTenantID());
@@ -1177,38 +1262,40 @@ public class HomeScreenGUI extends JFrame {
                 } else if (textArea.getText().trim().length() == 0) {
                     JOptionPane.showMessageDialog(null, "No Tenant registered by the name: " + searchTenant);
                     foundMatch = true;
-                    return null;
+                    //return null;
                 }
                 //Now I have the selected tenant ID I must now open a new window displaying their details and allow to change
-                for (Tenant tent : tenantAvailable) {
+                for (Tenant tent : tenantsAvailable) {
                     if (selectedTenant.equals("" + tent.getTenantID())) {
                         searchedTenant = tent;
                     }
-                }
+                }break;
             }
         }
-        return searchedTenant;
-    }
-    
-    private Tenant searchTenant(){
-        boolean foundMatch = false;
+        //return searchedTenant;
+                    
+                    
+                    
+                } else {
+                    
+                    boolean foundMatch = false;
         ArrayList<String> tenantIdList = new ArrayList<String>();
-        String tenantlIDString = "";
+        String tenIDString = "";
         String selectedTenant = "";
         Object[] tenantIds = {};
-        String searchName = JOptionPane.showInputDialog("Enter name of tenant: ");
+        String searchTenant = JOptionPane.showInputDialog("Enter name of tenant: ");
         Tenant searchedTenant = new Tenant();
         
-        if (searchName.equals("")) {
+        if (searchTenant.equals("")) {
             JOptionPane.showMessageDialog(null, "No name entered!");
         } else {
-            StringBuilder builder = new StringBuilder(landlordList.size());
+            StringBuilder builder = new StringBuilder(tenantList.size());
             while (!foundMatch) {
-                for (Tenant ten : tenantAvailable) {
-                    if (ten.getName().equalsIgnoreCase(searchName)) {
+                for (Tenant ten : tenantList) {
+                    if (ten.getName().equalsIgnoreCase(searchTenant)) {
                         builder.append(ten.toString() + "\n");
-                        tenantlIDString = Integer.toString(ten.getTenantID());
-                        tenantIdList.add(tenantlIDString);
+                        tenIDString = Integer.toString(ten.getTenantID());
+                        tenantIdList.add(tenIDString);
                         tenantIds = tenantIdList.toArray();
                         foundMatch = true;
                     }
@@ -1222,6 +1309,79 @@ public class HomeScreenGUI extends JFrame {
                 
                 //Display list if not empty
                 if (!(textArea.getText().trim().length() == 0)) {
+                    JOptionPane.showMessageDialog(null, scrollPane, "List of Tenants", JOptionPane.OK_OPTION);
+                    //In here should go the select patient code
+                    JFrame frame = new JFrame("Please select tenant");
+                    selectedTenant = (String) JOptionPane.showInputDialog(frame,
+                            "Which tenant do you wish to change details for? ",
+                            "Please select Tenant's ID number:",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            tenantIds,
+                            tenantIds[0]);
+                } else if (textArea.getText().trim().length() == 0) {
+                    JOptionPane.showMessageDialog(null, "No Tenant registered by the name: " + searchTenant);
+                    foundMatch = true;
+                    //return null;
+                }
+                //Now I have the selected tenant ID I must now open a new window displaying their details and allow to change
+                for (Tenant tent : tenantList) {
+                    if (selectedTenant.equals("" + tent.getTenantID())) {
+                        searchedTenant = tent;
+                    }
+                }
+            }
+        }
+        
+                    
+                    
+                }
+            }
+
+        });
+
+        j.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                amendTenMenu.dispose();
+            }
+        });
+
+        
+        return amdTenant;
+    }
+
+    private Tenant searchTenant() {
+        boolean foundMatch = false;
+        ArrayList<String> tenantIdList = new ArrayList<String>();
+        String tenantlIDString = "";
+        String selectedTenant = "";
+        Object[] tenantIds = {};
+        String searchName = JOptionPane.showInputDialog("Enter name of tenant: ");
+        Tenant searchedTenant = new Tenant();
+
+        if (searchName.equals("")) {
+            JOptionPane.showMessageDialog(null, "No name entered!");
+        } else {
+            StringBuilder builder = new StringBuilder(landlordList.size());
+            while (!foundMatch) {
+                for (Tenant ten : tenantsAvailable) {
+                    if (ten.getName().equalsIgnoreCase(searchName)) {
+                        builder.append(ten.toString() + "\n");
+                        tenantlIDString = Integer.toString(ten.getTenantID());
+                        tenantIdList.add(tenantlIDString);
+                        tenantIds = tenantIdList.toArray();
+                        foundMatch = true;
+                    }
+                }
+                //JTextArea for displaying the list (StringBuilder)
+                JTextArea textArea = new JTextArea(builder.toString());
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                textArea.setLineWrap(true);
+                textArea.setWrapStyleWord(true);
+                scrollPane.setPreferredSize(new Dimension(500, 500));
+
+                //Display list if not empty
+                if (!(textArea.getText().trim().length() == 0)) {
                     JOptionPane.showMessageDialog(null, scrollPane, "List of Landlords", JOptionPane.OK_OPTION);
                 } else if (textArea.getText().trim().length() == 0) {
                     JOptionPane.showMessageDialog(null, "No Landlord registered by the name: " + searchName);
@@ -1229,14 +1389,13 @@ public class HomeScreenGUI extends JFrame {
                     return null;
                 }
                 //Now I have the selected landlord ID I must now open a new window displaying their details and allow to change
-                for (Tenant tent : tenantAvailable) {
+                for (Tenant tent : tenantsAvailable) {
                     if (selectedTenant.equals("" + tent.getTenantID())) {
                         searchedTenant = tent;
                     }
                 }
             }
-        }return searchedTenant;
+        }
+        return searchedTenant;
     }
 }
-    
-    
